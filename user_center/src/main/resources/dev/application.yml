@@ -1,0 +1,54 @@
+# 自定义配置
+swagger:
+  domain: 127.0.0.1:${server.port}
+  api-ver: v1
+
+log:
+  dir: logs
+  console-level: info
+
+profile-env: dev
+
+# spring-boot config
+server:
+  address: 0.0.0.0
+  port: 8080
+
+# 主数据源
+spring:
+  datasource:
+    #读写分离推荐使用成熟中间件，为代码简洁易懂，不做过度设计
+    type=com.zaxxer.hikari.HikariDataSource
+    driver-class-name=com.mysql.jdbc.Driver
+    url=jdbc:mysql://127.0.0.1:3306/user_center
+    username=root
+    password=root
+
+# 更多数据源
+custom:
+  datasource:
+    names=slave1,slave2
+    slave1:
+      type=com.zaxxer.hikari.HikariDataSource
+      driver-class-name=com.mysql.jdbc.Driver
+      url=jdbc:mysql://127.0.0.1:3306/user_center
+      username=root
+      password=root
+
+    slave2:
+      type=com.zaxxer.hikari.HikariDataSource
+      driver-class-name=com.mysql.jdbc.Driver
+      url=jdbc:mysql://127.0.0.1:3306/user_center
+      username=root
+      password=root
+
+  freemarker:
+    suffix: .html
+    content-type: text/html
+    template-loader-path: classpath:/public/
+    charset: UTF-8
+    request-context-attribute: req
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
